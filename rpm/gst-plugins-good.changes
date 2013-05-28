@@ -1,0 +1,93 @@
+* Tue Feb 19 2013 Mohammed Hassan <mohammed.hassan@jollamobile.com> - 0.10.27
+- Add gst-plugins-good-0.11-v4l2-fix-interlaced-set_format-configuration.patch
+- Backported 0001-v4l2-fix-build-with-recent-kernels-the-v4l2_buffer-i.patch from upstream git
+
+* Mon Dec 10 2012 Marko Saukko <marko.saukko@jollamobile.com> - 0.10.27
+- Updated packaging.
+
+* Wed Nov 16 2011 Marko Saukko <marko.saukko@cybercom.com> - 0.10.27
+- Dropped builddeps to gtk-doc, gdk-pixbuf-2.0 and PyXML.
+- Removed devel-docs subpackage.
+
+* Mon Apr 18 2011 Virgil Bucoci <virgil.bucoci@windriver.com> - 0.10.27
+- Apply upstream patch to fix interlaced V4L2 sources (BCM #15777)
+
+* Tue Mar 29 2011 Zhou Ting <ting.z.zhou@intel.com> - 0.10.27
+- Add config dependency on gdk-pixbuf-2.0 to enable gdkpixbuf plugin.
+  Thus bmp decoder is provided, and bmp file can be viewed. (bmc#9541) 
+
+* Sat Jan 22 2011 Ling Yue <ling.yue@intel.com> - 0.10.27
+- Update to the latest version (FEA #10764)
+
+* Mon Jan 17 2011 Ling Yue <ling.yue@intel.com> - 0.10.27
+- Update to the latest version (0.10.26.4) (FEA #10764)
+
+* Thu Dec 09 2010 Ling Yue <ling.yue@intel.com> - 0.10.26
+- Remove the unnecessary ldconfig in %post and %postun
+
+* Thu Dec 02 2010 Topi Santakivi <topi.santakivi@digia.com> - 0.10.26
+- Update to the latest upstream version (FEA #10764)
+
+* Wed Aug 25 2010 Ling Yue <ling.yue@intel.com> - 0.10.24
+- Fix gst-plugins-good part of BMC#6520
+- Add sub package: devel-docs for the gtk doc
+- Configure option --enable-gtk-doc instead of --disable-gtk-doc
+  add --disable-nls to reduce size (no use of %find_lang)
+  remove --disable-freetypetest (deprecated)
+- BR changes: add python-devel, PyXML for gtk-doc build, remove 
+  ogg/theora/vorbis/libxml-2.0 since they are not needed
+
+* Tue Aug 10 2010 Ling Yue <ling.yue@intel.com> - 0.10.24
+- Use liborc instead of liboil
+
+* Fri Jul 30 2010 Ling Yue <ling.yue@intel.com> - 0.10.24
+- Upgrade to 0.10.24, but not use liborc first (still use liboil)
+- Add BR of speex and libsoup for HTTP streaming (BMC#1584) 
+
+* Wed May 19 2010 Bin Gao <bin.gao@intel.com> - 0.10.22
+- Update to 0.10.22
+
+* Sat Mar 13 2010 Rusty Lynch <rusty.lynch@intel.com> - 0.10.21
+- release 0.10.21
+- removed loitering Bugtraq35172 patch
+
+* Tue Dec 01 2009 Bin Gao <bin.gao@intel.com> - 0.10.17
+- Enable gudev for v4l2 device detection
+
+* Mon Nov 30 2009 Bin Gao <bin.gao@intel.com> - 0.10.17
+- Update to 0.10.17
+
+* Fri Aug 28 2009 Vivian Zhang <vivian.zhang@intel.com> - 0.10.15
+- Update to 0.10.15
+
+* Thu Aug 6 2009 Vivian Zhang <vivian.zhang@intel.com> - 0.10.14
+- Add BR:libjpeg-devel to build jpeg plugins, fixed #5172: some avi files cannot be played
+
+* Thu Jun 04 2009 Passion Zhao <passion.zhao@intel.com> - 0.10.14-2
+- Fix Bugtraq35172: http://www.securityfocus.com/bid/35172
+  PNG Output Buffer Integer Overflow Vulnerability
+
+* Tue Mar 31 2009 Vivian Zhang <vivian.zhang@intel.com> - 0.10.14
+- Update to 0.10.14
+
+* Mon Mar 09 2009 Anas Nashif <anas.nashif@intel.com> - 0.10.13
+- Add support for flac
+
+* Sat Feb 14 2009 Vivian Zhang <vivian.zhang@intel.com> - 0.10.11
+- Update to 0.10.13
+
+* Thu Jan 22 2009 Rusty Lynch <rusty.lynch@intel.com> - 0.10.11
+- Adding hal element support
+- Adding pulseaudio element support
+- Adding  gconf element
+- Adding taglib element support
+
+* Tue Dec 16 2008 Anas Nashif <anas.nashif@intel.com> - 0.10.11
+- Update spec file using latest spec-builder
+
+* Tue Dec 16 2008 Anas Nashif <anas.nashif@intel.com> - 0.10.11
+- Update spec file using latest spec-builder
+
+* Thu Dec 08 2008 Rusty Lynch <rusty.lynch@intel.com> - 0.10.11-1
+- Creating a 0.10.11-1 release 
+
