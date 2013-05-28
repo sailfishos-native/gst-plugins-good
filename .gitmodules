@@ -1,0 +1,3 @@
+[submodule "gst-plugins-good"]
+	path = gst-plugins-good
+	url = http://anongit.freedesktop.org/git/gstreamer/gst-plugins-good.git
