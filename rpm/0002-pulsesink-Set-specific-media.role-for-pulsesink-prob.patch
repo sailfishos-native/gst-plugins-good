@@ -1,0 +1,58 @@
+From 0c8152f26c3fa4b51b824485bc701678490e1a36 Mon Sep 17 00:00:00 2001
+From: =?UTF-8?q?Juho=20H=C3=A4m=C3=A4l=C3=A4inen?=
+ <juho.hamalainen@tieto.com>
+Date: Thu, 17 Oct 2013 15:58:04 +0300
+Subject: [PATCH] [pulsesink] Set specific media.role for pulsesink probe.
+
+Some PulseAudio modules, like module-role-ducking and module-role-cork
+rely on media.role for their operation. Pulsesink probe stream has the
+same media.role property as the resulting playback stream, which causes
+unneccessary and distruptive actions in aforementioned modules.
+Set/overwrite pulsesink probe stream's media.role property so that probe
+stream can be distinguished from resulting stream more easily.
+---
+ ext/pulse/pulsesink.c | 13 ++++++++++++-
+ 1 file changed, 12 insertions(+), 1 deletion(-)
+
+diff --git a/ext/pulse/pulsesink.c b/ext/pulse/pulsesink.c
+index 11e9c89..69c1b6e 100644
+--- a/ext/pulse/pulsesink.c
++++ b/ext/pulse/pulsesink.c
+@@ -2065,6 +2065,7 @@ gst_pulsesink_pad_acceptcaps (GstPad * pad, GstCaps * caps)
+   pa_channel_map channel_map;
+   pa_stream_flags_t flags;
+   pa_format_info *format = NULL, *formats[1];
++  pa_proplist *probe_proplist = NULL;
+   guint channels;
+ 
+   pad_caps = gst_pad_get_caps_reffed (pad);
+@@ -2137,8 +2138,16 @@ gst_pulsesink_pad_acceptcaps (GstPad * pad, GstCaps * caps)
+      * accpeted by whatever sink we're routed to */
+     formats[0] = format;
+ 
++    /* Set separate media.role property for probe stream, so that it can
++     * be distinguished more easily from the actual playback stream. */
++    if (psink->proplist)
++      probe_proplist = pa_proplist_copy(psink->proplist);
++    else
++      probe_proplist = pa_proplist_new();
++    pa_proplist_sets(probe_proplist, PA_PROP_MEDIA_ROLE, "format-probe");
++
+     if (!(stream = pa_stream_new_extended (pbuf->context, "pulsesink probe",
+-                formats, 1, psink->proplist)))
++                formats, 1, probe_proplist)))
+       goto out;
+ 
+     /* construct the flags */
+@@ -2170,6 +2179,8 @@ out:
+   pa_threaded_mainloop_unlock (mainloop);
+ 
+ done:
++  if (probe_proplist)
++    pa_proplist_free(probe_proplist);
+   gst_object_unref (psink);
+   return ret;
+ 
+-- 
+1.8.4
+
