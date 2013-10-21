@@ -17,6 +17,7 @@ URL:        http://gstreamer.freedesktop.org/
 Source0:    http://gstreamer.freedesktop.org/src/%{name}/%{name}-%{version}.tar.bz2
 Source100:  gst-plugins-good.yaml
 Patch0:     0001-v4l2-fix-build-with-recent-kernels-the-v4l2_buffer-i.patch
+Patch1:     0002-pulsesink-Set-specific-media.role-for-pulsesink-prob.patch
 Requires(pre): %{_bindir}/gconftool-2
 Requires(preun): %{_bindir}/gconftool-2
 Requires(post): %{_bindir}/gconftool-2
@@ -49,6 +50,8 @@ quality and under the LGPL license.
 
 # 0001-v4l2-fix-build-with-recent-kernels-the-v4l2_buffer-i.patch
 %patch0 -p1
+# 0002-pulsesink-Set-specific-media.role-for-pulsesink-prob.patch
+%patch1 -p1
 # >> setup
 # << setup
 
