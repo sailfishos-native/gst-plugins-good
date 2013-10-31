@@ -10,6 +10,7 @@ Sources:
 Patches:
     - 0001-v4l2-fix-build-with-recent-kernels-the-v4l2_buffer-i.patch
     - 0002-pulsesink-Set-specific-media.role-for-pulsesink-prob.patch
+    - 0003-isomp4-Add-support-for-rotation-information-in-strea.patch
 Description: |
     GStreamer Good Plug-ins is a collection of well-supported plug-ins of good 
     quality and under the LGPL license.
