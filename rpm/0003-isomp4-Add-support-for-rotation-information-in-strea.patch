@@ -1,0 +1,241 @@
+From 3c50694ddee7290fb39c9189e043b77d707d8458 Mon Sep 17 00:00:00 2001
+From: Andrew den Exter <andrew.den.exter@jollamobile.com>
+Date: Thu, 31 Oct 2013 15:38:45 +0000
+Subject: [PATCH] [isomp4] Add support for rotation information in stream
+ headers.
+
+---
+ gst/isomp4/atoms.c    | 40 ++++++++++++++++++++++++++++++++++++++++
+ gst/isomp4/atoms.h    |  1 +
+ gst/isomp4/gstqtmux.c | 24 ++++++++++++++++++++++++
+ gst/isomp4/gstqtmux.h |  2 ++
+ gst/isomp4/qtdemux.c  | 28 +++++++++++++++++++++++++++-
+ 5 files changed, 94 insertions(+), 1 deletion(-)
+
+diff --git a/gst/isomp4/atoms.c b/gst/isomp4/atoms.c
+index 5bd6cb7..79cb129 100644
+--- a/gst/isomp4/atoms.c
++++ b/gst/isomp4/atoms.c
+@@ -3225,6 +3225,45 @@ atom_trak_set_video_commons (AtomTRAK * trak, AtomsContext * context,
+   trak->tkhd.height = height << 16;
+ }
+ 
++static void
++atom_trak_set_video_transform (AtomTRAK * trak, gint rotation)
++{
++    switch (rotation) {
++    case 90:
++        trak->tkhd.matrix[0] = 0;
++        trak->tkhd.matrix[1] = -(1 << 16);
++        trak->tkhd.matrix[3] = (1 << 16);
++        trak->tkhd.matrix[4] = 0;
++        trak->tkhd.matrix[6] = trak->tkhd.width;
++        trak->tkhd.matrix[7] = 0;
++        break;
++    case 180:
++        trak->tkhd.matrix[0] = -(1 << 16);
++        trak->tkhd.matrix[1] = 0;
++        trak->tkhd.matrix[3] = 0;
++        trak->tkhd.matrix[4] = -(1 << 16);
++        trak->tkhd.matrix[6] = trak->tkhd.width;
++        trak->tkhd.matrix[7] = trak->tkhd.height;
++        break;
++    case 270:
++        trak->tkhd.matrix[0] = 0;
++        trak->tkhd.matrix[1] = (1 << 16);
++        trak->tkhd.matrix[3] = -(1 << 16);
++        trak->tkhd.matrix[4] = 0;
++        trak->tkhd.matrix[6] = 0;
++        trak->tkhd.matrix[7] = trak->tkhd.height;
++        break;
++    default:
++        trak->tkhd.matrix[0] = (1 << 16);
++        trak->tkhd.matrix[1] = 0;
++        trak->tkhd.matrix[3] = 0;
++        trak->tkhd.matrix[4] = (1 << 16);
++        trak->tkhd.matrix[6] = 0;
++        trak->tkhd.matrix[7] = 0;
++        break;
++    }
++}
++
+ void
+ atom_trak_set_audio_type (AtomTRAK * trak, AtomsContext * context,
+     AudioSampleEntry * entry, guint32 scale, AtomInfo * ext, gint sample_size)
+@@ -3306,6 +3345,7 @@ atom_trak_set_video_type (AtomTRAK * trak, AtomsContext * context,
+   }
+ 
+   atom_trak_set_video_commons (trak, context, scale, dwidth, dheight);
++  atom_trak_set_video_transform (trak, entry->rotation);
+   atom_stsd_remove_entries (&trak->mdia.minf.stbl.stsd);
+   ste = atom_trak_add_video_entry (trak, context, entry->fourcc);
+ 
+diff --git a/gst/isomp4/atoms.h b/gst/isomp4/atoms.h
+index 20ea141..d8be93b 100644
+--- a/gst/isomp4/atoms.h
++++ b/gst/isomp4/atoms.h
+@@ -878,6 +878,7 @@ typedef struct
+   gint color_table_id;
+   guint par_n;
+   guint par_d;
++  gint rotation;
+ 
+   GstBuffer *codec_data;
+ } VisualSampleEntry;
+diff --git a/gst/isomp4/gstqtmux.c b/gst/isomp4/gstqtmux.c
+index 5e9fcdd..686577a 100644
+--- a/gst/isomp4/gstqtmux.c
++++ b/gst/isomp4/gstqtmux.c
+@@ -372,6 +372,7 @@ gst_qt_mux_pad_reset (GstQTPad * qtpad)
+   qtpad->ts_n_entries = 0;
+   qtpad->total_duration = 0;
+   qtpad->total_bytes = 0;
++  qtpad->rotation = -1;
+ 
+   qtpad->buf_head = 0;
+   qtpad->buf_tail = 0;
+@@ -2944,6 +2945,7 @@ gst_qt_mux_video_sink_set_caps (GstPad * pad, GstCaps * caps)
+   GList *ext_atom_list = NULL;
+   gboolean sync = FALSE;
+   int par_num, par_den;
++  gint orientation_angle = 0;
+ 
+   /* find stream data */
+   qtpad = (GstQTPad *) gst_pad_get_element_private (pad);
+@@ -2999,6 +3001,8 @@ gst_qt_mux_video_sink_set_caps (GstPad * pad, GstCaps * caps)
+   gst_structure_get_fraction (structure, "pixel-aspect-ratio", &par_num,
+       &par_den);
+ 
++  gst_structure_get_int (structure, "orientation-angle", &orientation_angle);
++
+   qtpad->is_out_of_order = FALSE;
+ 
+   /* bring frame numerator into a range that ensures both reasonable resolution
+@@ -3017,6 +3021,10 @@ gst_qt_mux_video_sink_set_caps (GstPad * pad, GstCaps * caps)
+   entry.color_table_id = -1;
+   entry.frame_count = 1;
+   entry.depth = 24;
++  if (qtpad->rotation == -1)
++    entry.rotation = orientation_angle;
++  else
++    entry.rotation = qtpad->rotation;
+ 
+   /* sync entries by default */
+   sync = TRUE;
+@@ -3268,6 +3276,7 @@ gst_qt_mux_sink_event (GstPad * pad, GstEvent * event)
+   gboolean ret;
+   GstQTMux *qtmux;
+   guint32 avg_bitrate = 0, max_bitrate = 0;
++  gchar *image_orientation = NULL;
+ 
+   qtmux = GST_QT_MUX_CAST (gst_pad_get_parent (pad));
+   switch (GST_EVENT_TYPE (event)) {
+@@ -3296,6 +3305,21 @@ gst_qt_mux_sink_event (GstPad * pad, GstEvent * event)
+           qtpad->max_bitrate = max_bitrate;
+       }
+ 
++      if (gst_tag_list_get_string (list, GST_TAG_IMAGE_ORIENTATION, &image_orientation)) {
++        GstQTPad *qtpad = gst_pad_get_element_private (pad);
++
++        if (strcmp(image_orientation, "rotate-0") == 0) {
++          qtpad->rotation = 0;
++        } else if (strcmp(image_orientation, "rotate-90") == 0) {
++          qtpad->rotation = 90;
++        } else if (strcmp(image_orientation, "rotate-180") == 0) {
++          qtpad->rotation = 180;
++        } else if (strcmp(image_orientation, "rotate-270") == 0) {
++          qtpad->rotation = 270;
++        }
++        g_free(image_orientation);
++      }
++
+       break;
+     }
+     default:
+diff --git a/gst/isomp4/gstqtmux.h b/gst/isomp4/gstqtmux.h
+index 1851973..8f64669 100644
+--- a/gst/isomp4/gstqtmux.h
++++ b/gst/isomp4/gstqtmux.h
+@@ -97,6 +97,8 @@ struct _GstQTPad
+   /* bitrates */
+   guint32 avg_bitrate, max_bitrate;
+ 
++  gint rotation;
++
+   /* for avg bitrate calculation */
+   guint64 total_bytes;
+   guint64 total_duration;
+diff --git a/gst/isomp4/qtdemux.c b/gst/isomp4/qtdemux.c
+index 14d5413..f7452e3 100644
+--- a/gst/isomp4/qtdemux.c
++++ b/gst/isomp4/qtdemux.c
+@@ -243,6 +243,7 @@ struct _QtDemuxStream
+   gint fps_d;
+   guint16 bits_per_sample;
+   guint16 color_table_id;
++  gint rotation;
+ 
+   /* audio info */
+   gdouble rate;
+@@ -5039,6 +5040,8 @@ gst_qtdemux_add_stream (GstQTDemux * qtdemux,
+             GST_TYPE_FRACTION, stream->par_w, stream->par_h, NULL);
+       }
+ 
++      gst_caps_set_simple (stream->caps, "orientation-angle", G_TYPE_INT, stream->rotation, NULL);
++
+       depth = stream->bits_per_sample;
+ 
+       /* more than 32 bits means grayscale */
+@@ -5127,6 +5130,7 @@ gst_qtdemux_add_stream (GstQTDemux * qtdemux,
+   }
+ 
+   if (stream->pad) {
++
+     GST_PAD_ELEMENT_PRIVATE (stream->pad) = stream;
+ 
+     gst_pad_use_fixed_caps (stream->pad);
+@@ -6455,11 +6459,22 @@ qtdemux_parse_trak (GstQTDemux * qtdemux, GNode * trak)
+ 
+   if (stream->subtype == FOURCC_vide) {
+     guint32 w = 0, h = 0;
++    gint32 matrix[9];
+ 
+     stream->sampled = TRUE;
+ 
+     /* version 1 uses some 64-bit ints */
+-    if (!gst_byte_reader_skip (&tkhd, 56 + value_size)
++    if (!gst_byte_reader_skip (&tkhd, 20 + value_size)
++        || !gst_byte_reader_get_int32_be (&tkhd, &matrix[0])
++        || !gst_byte_reader_get_int32_be (&tkhd, &matrix[1])
++        || !gst_byte_reader_get_int32_be (&tkhd, &matrix[2])
++        || !gst_byte_reader_get_int32_be (&tkhd, &matrix[3])
++
++        || !gst_byte_reader_get_int32_be (&tkhd, &matrix[4])
++        || !gst_byte_reader_get_int32_be (&tkhd, &matrix[5])
++        || !gst_byte_reader_get_int32_be (&tkhd, &matrix[6])
++        || !gst_byte_reader_get_int32_be (&tkhd, &matrix[7])
++        || !gst_byte_reader_get_int32_be (&tkhd, &matrix[8])
+         || !gst_byte_reader_get_uint32_be (&tkhd, &w)
+         || !gst_byte_reader_get_uint32_be (&tkhd, &h))
+       goto corrupt_file;
+@@ -6467,6 +6482,17 @@ qtdemux_parse_trak (GstQTDemux * qtdemux, GNode * trak)
+     stream->display_width = w >> 16;
+     stream->display_height = h >> 16;
+ 
++
++    if (matrix[0] < 0 && matrix[4] < 0 && matrix[1] == 0 && matrix[3] == 0) {
++      stream->rotation = 180;
++    } else if (matrix[0] == 0 && matrix[4] == 0 && matrix[1] > 0 && matrix[3] < 0) {
++      stream->rotation = 90;
++    } else if (matrix[0] == 0 && matrix[4] == 0 && matrix[1] < 0 && matrix[3] > 0) {
++      stream->rotation = 270;
++    } else {
++      stream->rotation = 0;
++    }
++
+     offset = 16;
+     if (len < 86)
+       goto corrupt_file;
+-- 
+1.8.3-rc3
+
