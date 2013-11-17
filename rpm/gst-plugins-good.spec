@@ -54,7 +54,8 @@ NOCONFIGURE=1 ./autogen.sh
   --enable-orc \
   --disable-gst_v4l2 \
   --disable-oss \
-  --disable-oss4
+  --disable-oss4 \
+  --disable-y4m
 
 make %{?jobs:-j%jobs}
 
@@ -113,7 +114,6 @@ rm -rf $RPM_BUILD_ROOT
 %{_libdir}/gstreamer-%{majorminor}/libgstreplaygain.so
 %{_libdir}/gstreamer-%{majorminor}/libgstdeinterlace.so
 %{_libdir}/gstreamer-%{majorminor}/libgstflv.so
-%{_libdir}/gstreamer-%{majorminor}/libgsty4menc.so
 %{_libdir}/gstreamer-%{majorminor}/libgstimagefreeze.so
 %{_libdir}/gstreamer-%{majorminor}/libgstshapewipe.so
 %{_libdir}/gstreamer-%{majorminor}/libgstvideofilter.so
