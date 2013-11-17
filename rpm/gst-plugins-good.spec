@@ -52,13 +52,15 @@ NOCONFIGURE=1 ./autogen.sh
   --enable-gtk-doc-pdf=no \
   --enable-debug \
   --enable-orc \
-  --disable-gst_v4l2
+  --disable-gst_v4l2 \
+  --disable-oss \
+  --disable-oss4
 
 make %{?jobs:-j%jobs}
 
 %install
 %make_install
-                                                                                
+
 # Clean out files that should not be part of the rpm.
 rm -f $RPM_BUILD_ROOT%{_libdir}/gstreamer-%{majorminor}/*.la
 rm -f $RPM_BUILD_ROOT%{_libdir}/gstreamer-%{majorminor}/*.a
@@ -112,7 +114,6 @@ rm -rf $RPM_BUILD_ROOT
 %{_libdir}/gstreamer-%{majorminor}/libgstdeinterlace.so
 %{_libdir}/gstreamer-%{majorminor}/libgstflv.so
 %{_libdir}/gstreamer-%{majorminor}/libgsty4menc.so
-%{_libdir}/gstreamer-%{majorminor}/libgstoss4audio.so
 %{_libdir}/gstreamer-%{majorminor}/libgstimagefreeze.so
 %{_libdir}/gstreamer-%{majorminor}/libgstshapewipe.so
 %{_libdir}/gstreamer-%{majorminor}/libgstvideofilter.so
@@ -121,7 +122,6 @@ rm -rf $RPM_BUILD_ROOT
 %{_libdir}/gstreamer-%{majorminor}/libgstflac.so
 %{_libdir}/gstreamer-%{majorminor}/libgstjpeg.so
 %{_libdir}/gstreamer-%{majorminor}/libgstpng.so
-%{_libdir}/gstreamer-%{majorminor}/libgstossaudio.so
 %{_libdir}/gstreamer-%{majorminor}/libgstspeex.so
 %{_libdir}/gstreamer-%{majorminor}/libgstsouphttpsrc.so
 %{_libdir}/gstreamer-%{majorminor}/libgstpulse.so
