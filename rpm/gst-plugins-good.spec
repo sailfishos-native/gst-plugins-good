@@ -15,7 +15,6 @@ Group:      Applications/Multimedia
 License:    LGPL
 URL:        http://gstreamer.freedesktop.org/
 Source0:    http://gstreamer.freedesktop.org/src/%{name}/%{name}-%{version}.tar.bz2
-Source100:  gst-plugins-good.yaml
 Patch0:     0001-v4l2-fix-build-with-recent-kernels-the-v4l2_buffer-i.patch
 Patch1:     0002-pulsesink-Set-specific-media.role-for-pulsesink-prob.patch
 Patch2:     0003-isomp4-Add-support-for-rotation-information-in-strea.patch
