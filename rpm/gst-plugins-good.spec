@@ -15,13 +15,9 @@ Group:      Applications/Multimedia
 License:    LGPL
 URL:        http://gstreamer.freedesktop.org/
 Source0:    http://gstreamer.freedesktop.org/src/%{name}/%{name}-%{version}.tar.bz2
-Source100:  gst-plugins-good.yaml
 Patch0:     0001-v4l2-fix-build-with-recent-kernels-the-v4l2_buffer-i.patch
 Patch1:     0002-pulsesink-Set-specific-media.role-for-pulsesink-prob.patch
 Patch2:     0003-isomp4-Add-support-for-rotation-information-in-strea.patch
-Requires(pre): %{_bindir}/gconftool-2
-Requires(preun): %{_bindir}/gconftool-2
-Requires(post): %{_bindir}/gconftool-2
 BuildRequires:  pkgconfig(orc-0.4) >= 0.4.5
 BuildRequires:  pkgconfig(speex)
 BuildRequires:  pkgconfig(glib-2.0)
@@ -30,7 +26,6 @@ BuildRequires:  pkgconfig(pango)
 BuildRequires:  pkgconfig(alsa)
 BuildRequires:  pkgconfig(gstreamer-0.10)
 BuildRequires:  pkgconfig(gstreamer-plugins-base-0.10)
-BuildRequires:  pkgconfig(gconf-2.0)
 BuildRequires:  pkgconfig(libpulse)
 BuildRequires:  pkgconfig(taglib)
 BuildRequires:  pkgconfig(flac)
@@ -73,7 +68,9 @@ export NOCONFIGURE="1"
     --disable-schema-install \
     --with-gudev \
     --disable-nls \
-    --disable-gtk-doc
+    --disable-gtk-doc \
+    --disable-gconf \
+    --disable-gconftool
 
 make %{?jobs:-j%jobs}
 
@@ -89,32 +86,10 @@ rm -rf %{buildroot}
 # >> install post
 # << install post
 
-%pre
-if [ "$1" -gt 1 ]; then
-  export GCONF_CONFIG_SOURCE=`gconftool-2 --get-default-source`
-  gconftool-2 --makefile-uninstall-rule \
-    %{_sysconfdir}/gconf/schemas/gstreamer-0.10.schemas \
-    > /dev/null || :
-fi
-
-%preun
-if [ "$1" -eq 0 ]; then
-  export GCONF_CONFIG_SOURCE=`gconftool-2 --get-default-source`
-  gconftool-2 --makefile-uninstall-rule \
-    %{_sysconfdir}/gconf/schemas/gstreamer-0.10.schemas \
-    > /dev/null || :
-fi
-
-%post
-export GCONF_CONFIG_SOURCE=`gconftool-2 --get-default-source`
-gconftool-2 --makefile-install-rule \
-    %{_sysconfdir}/gconf/schemas/gstreamer-0.10.schemas  > /dev/null || :
-
 %files
 %defattr(-,root,root,-)
 # >> files
 # Equaliser presets
 %{_datadir}/gstreamer-0.10/presets/
-%{_sysconfdir}/gconf/schemas/gstreamer-0.10.schemas
 %{_libdir}/gstreamer-0.10/*.so
 # << files
