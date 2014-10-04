@@ -36,6 +36,7 @@ BuildRequires:  flex
 BuildRequires:  libjpeg-devel
 BuildRequires:  python-devel
 BuildRequires:  gettext-devel
+BuildRequires:  git
 
 %description
 GStreamer Good Plug-ins is a collection of well-supported plug-ins of good 
