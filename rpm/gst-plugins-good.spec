@@ -18,6 +18,7 @@ Source0:    http://gstreamer.freedesktop.org/src/%{name}/%{name}-%{version}.tar.
 Patch0:     0001-v4l2-fix-build-with-recent-kernels-the-v4l2_buffer-i.patch
 Patch1:     0002-pulsesink-Set-specific-media.role-for-pulsesink-prob.patch
 Patch2:     0003-isomp4-Add-support-for-rotation-information-in-strea.patch
+Patch3:     0004-gst-plugins-v4l2-0.10.31-linux-headers-3.9.patch
 BuildRequires:  pkgconfig(orc-0.4) >= 0.4.5
 BuildRequires:  pkgconfig(speex)
 BuildRequires:  pkgconfig(glib-2.0)
@@ -35,6 +36,7 @@ BuildRequires:  flex
 BuildRequires:  libjpeg-devel
 BuildRequires:  python-devel
 BuildRequires:  gettext-devel
+BuildRequires:  git
 
 %description
 GStreamer Good Plug-ins is a collection of well-supported plug-ins of good 
@@ -50,6 +52,8 @@ quality and under the LGPL license.
 %patch1 -p1
 # 0003-isomp4-Add-support-for-rotation-information-in-strea.patch
 %patch2 -p1
+# 0004-gst-plugins-v4l2-0.10.31-linux-headers-3.9.patch
+%patch3 -p1
 # >> setup
 # << setup
 
