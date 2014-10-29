@@ -1,8 +1,7 @@
 %define majorminor  1.0
 %define gstreamer   gstreamer
-%define gst_minver  1.2.0
 
-Name: 		%{gstreamer}1.0-plugins-good
+Name: 		%{gstreamer}%{majorminor}-plugins-good
 Version: 	1.2.0
 Release: 	1
 Summary: 	GStreamer plug-ins with good code and licensing
@@ -41,7 +40,7 @@ plug-ins.
 %build
 NOCONFIGURE=1 ./autogen.sh
 %configure \
-  --with-package-name='Jolla GStreamer Good Plug-ins' \
+  --with-package-name='SailfishOS GStreamer Good Plug-ins' \
   --with-package-origin='http://jolla.com' \
   --disable-gtk-doc \
   --disable-nls \
