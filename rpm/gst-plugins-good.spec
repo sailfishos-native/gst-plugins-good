@@ -20,7 +20,6 @@ BuildRequires: pkgconfig(libpulse)
 BuildRequires: python
 BuildRequires: pkgconfig(gstreamer-plugins-base-1.0)
 BuildRequires: pkgconfig(orc-0.4) >= 0.4.18
-BuildRequires: pkgconfig(libsoup-2.4)
 BuildRequires: autoconf
 BuildRequires: automake
 BuildRequires: libtool
@@ -121,5 +120,4 @@ rm -fr $RPM_BUILD_ROOT%{_mandir}
 %{_libdir}/gstreamer-%{majorminor}/libgstjpeg.so
 %{_libdir}/gstreamer-%{majorminor}/libgstpng.so
 %{_libdir}/gstreamer-%{majorminor}/libgstspeex.so
-%{_libdir}/gstreamer-%{majorminor}/libgstsouphttpsrc.so
 %{_libdir}/gstreamer-%{majorminor}/libgstpulse.so
