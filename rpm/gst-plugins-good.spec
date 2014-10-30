@@ -11,6 +11,7 @@ URL:		http://gstreamer.freedesktop.org/
 Vendor:         GStreamer Backpackers Team <package@gstreamer.freedesktop.org>
 Source:         http://gstreamer.freedesktop.org/src/gst-plugins-good/gstreamer1.0-plugins-good-%{version}.tar.xz
 Patch0:         0001-Set-specific-media.role-for-pulsesink-probe.patch
+Requires:      orc >= 0.4.18
 BuildRequires: pkgconfig(flac)
 BuildRequires: libjpeg-devel
 BuildRequires: pkgconfig(libpng)
@@ -18,7 +19,7 @@ BuildRequires: pkgconfig(speex)
 BuildRequires: pkgconfig(libpulse)
 BuildRequires: python
 BuildRequires: pkgconfig(gstreamer-plugins-base-1.0)
-BuildRequires: pkgconfig(orc-0.4)
+BuildRequires: pkgconfig(orc-0.4) >= 0.4.18
 BuildRequires: pkgconfig(libsoup-2.4)
 BuildRequires: autoconf213
 BuildRequires: automake
