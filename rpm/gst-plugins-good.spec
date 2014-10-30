@@ -21,7 +21,7 @@ BuildRequires: python
 BuildRequires: pkgconfig(gstreamer-plugins-base-1.0)
 BuildRequires: pkgconfig(orc-0.4) >= 0.4.18
 BuildRequires: pkgconfig(libsoup-2.4)
-BuildRequires: autoconf213
+BuildRequires: autoconf
 BuildRequires: automake
 BuildRequires: libtool
 BuildRequires: gettext-devel
