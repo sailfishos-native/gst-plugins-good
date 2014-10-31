@@ -8,7 +8,6 @@ Summary: 	GStreamer plug-ins with good code and licensing
 Group: 		Applications/Multimedia
 License: 	LGPL
 URL:		http://gstreamer.freedesktop.org/
-Vendor:         GStreamer Backpackers Team <package@gstreamer.freedesktop.org>
 Source:         http://gstreamer.freedesktop.org/src/gst-plugins-good/gstreamer1.0-plugins-good-%{version}.tar.xz
 Patch0:         0001-Set-specific-media.role-for-pulsesink-probe.patch
 Requires:      orc >= 0.4.18
