@@ -16,6 +16,7 @@ BuildRequires: libjpeg-devel
 BuildRequires: pkgconfig(libpng)
 BuildRequires: pkgconfig(speex)
 BuildRequires: pkgconfig(libpulse)
+BuildRequires: pkgconfig(libsoup-2.4)
 BuildRequires: python
 BuildRequires: pkgconfig(gstreamer-plugins-base-1.0)
 BuildRequires: pkgconfig(orc-0.4) >= 0.4.18
@@ -120,3 +121,4 @@ rm -fr $RPM_BUILD_ROOT%{_mandir}
 %{_libdir}/gstreamer-%{majorminor}/libgstpng.so
 %{_libdir}/gstreamer-%{majorminor}/libgstspeex.so
 %{_libdir}/gstreamer-%{majorminor}/libgstpulse.so
+%{_libdir}/gstreamer-%{majorminor}/libgstsouphttpsrc.so
