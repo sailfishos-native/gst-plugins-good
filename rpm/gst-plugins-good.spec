@@ -2,7 +2,7 @@
 %define gstreamer   gstreamer
 
 Name: 		%{gstreamer}%{majorminor}-plugins-good
-Version: 	1.4.4
+Version: 	1.4.5
 Release: 	1
 Summary: 	GStreamer plug-ins with good code and licensing
 Group: 		Applications/Multimedia
