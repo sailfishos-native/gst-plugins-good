@@ -1,6 +1,6 @@
-From 6d965d83f268f1586d5da61753e5fecfc3b38bf5 Mon Sep 17 00:00:00 2001
-From: Mohammed Sameer <msameer@foolab.org>
-Date: Tue, 3 Mar 2015 00:51:50 +0200
+From 240975adc75fc1c316261adbc360c433d289be6a Mon Sep 17 00:00:00 2001
+From: Mohammed Hassan <mohammed.hassan@jolla.com>
+Date: Thu, 5 Mar 2015 17:12:13 +0200
 Subject: [PATCH] qtmux: write rotation information into the TKHD matrix
 
 This patch handles the simple cases of 0, 90, 180 and 270
@@ -16,7 +16,7 @@ Based on the work of Andrew den Exter <andrew.den.exter@jollamobile.com>
  3 files changed, 66 insertions(+)
 
 diff --git a/gst/isomp4/atoms.c b/gst/isomp4/atoms.c
-index 3f1051c..8eeba19 100644
+index 3f1051c..bb9da1c 100644
 --- a/gst/isomp4/atoms.c
 +++ b/gst/isomp4/atoms.c
 @@ -3557,6 +3557,45 @@ atom_trak_set_subtitle_type (AtomTRAK * trak, AtomsContext * context,
@@ -28,36 +28,36 @@ index 3f1051c..8eeba19 100644
 +{
 +  switch (rotation) {
 +  case 0:
-+    trak->tkhd.matrix[0] = (1 << 16);
++    trak->tkhd.matrix[0] = 1;
 +    trak->tkhd.matrix[1] = 0;
 +    trak->tkhd.matrix[3] = 0;
-+    trak->tkhd.matrix[4] = (1 << 16);
++    trak->tkhd.matrix[4] = 1;
 +    trak->tkhd.matrix[6] = 0;
 +    trak->tkhd.matrix[7] = 0;
 +    break;
 +  case 90:
 +    trak->tkhd.matrix[0] = 0;
-+    trak->tkhd.matrix[1] = -(1 << 16);
-+    trak->tkhd.matrix[3] = (1 << 16);
++    trak->tkhd.matrix[1] = 1;
++    trak->tkhd.matrix[3] = G_MAXUINT16;
 +    trak->tkhd.matrix[4] = 0;
-+    trak->tkhd.matrix[6] = trak->tkhd.width;
++    trak->tkhd.matrix[6] = trak->tkhd.height;
 +    trak->tkhd.matrix[7] = 0;
 +    break;
 +  case 180:
-+    trak->tkhd.matrix[0] = -(1 << 16);
++    trak->tkhd.matrix[0] = G_MAXUINT16;
 +    trak->tkhd.matrix[1] = 0;
 +    trak->tkhd.matrix[3] = 0;
-+    trak->tkhd.matrix[4] = -(1 << 16);
++    trak->tkhd.matrix[4] = G_MAXUINT16;
 +    trak->tkhd.matrix[6] = trak->tkhd.width;
 +    trak->tkhd.matrix[7] = trak->tkhd.height;
 +    break;
 +  case 270:
 +    trak->tkhd.matrix[0] = 0;
-+    trak->tkhd.matrix[1] = (1 << 16);
-+    trak->tkhd.matrix[3] = -(1 << 16);
++    trak->tkhd.matrix[1] = G_MAXUINT16;
++    trak->tkhd.matrix[3] = 1;
 +    trak->tkhd.matrix[4] = 0;
 +    trak->tkhd.matrix[6] = 0;
-+    trak->tkhd.matrix[7] = trak->tkhd.height;
++    trak->tkhd.matrix[7] = trak->tkhd.width;
 +    break;
 +  }
 +}
