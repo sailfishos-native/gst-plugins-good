@@ -1,7 +1,7 @@
-From 240975adc75fc1c316261adbc360c433d289be6a Mon Sep 17 00:00:00 2001
+From 58664325fd4c16d2c4891fe8ca4f59b82925ffac Mon Sep 17 00:00:00 2001
 From: Mohammed Hassan <mohammed.hassan@jolla.com>
 Date: Thu, 5 Mar 2015 17:12:13 +0200
-Subject: [PATCH] qtmux: write rotation information into the TKHD matrix
+Subject: [PATCH 2/2] qtmux: write rotation information into the TKHD matrix
 
 This patch handles the simple cases of 0, 90, 180 and 270
 
@@ -16,7 +16,7 @@ Based on the work of Andrew den Exter <andrew.den.exter@jollamobile.com>
  3 files changed, 66 insertions(+)
 
 diff --git a/gst/isomp4/atoms.c b/gst/isomp4/atoms.c
-index 3f1051c..bb9da1c 100644
+index 3f1051c..dd4f875 100644
 --- a/gst/isomp4/atoms.c
 +++ b/gst/isomp4/atoms.c
 @@ -3557,6 +3557,45 @@ atom_trak_set_subtitle_type (AtomTRAK * trak, AtomsContext * context,
@@ -38,22 +38,22 @@ index 3f1051c..bb9da1c 100644
 +  case 90:
 +    trak->tkhd.matrix[0] = 0;
 +    trak->tkhd.matrix[1] = 1;
-+    trak->tkhd.matrix[3] = G_MAXUINT16;
++    trak->tkhd.matrix[3] = -1;
 +    trak->tkhd.matrix[4] = 0;
 +    trak->tkhd.matrix[6] = trak->tkhd.height;
 +    trak->tkhd.matrix[7] = 0;
 +    break;
 +  case 180:
-+    trak->tkhd.matrix[0] = G_MAXUINT16;
++    trak->tkhd.matrix[0] = -1;
 +    trak->tkhd.matrix[1] = 0;
 +    trak->tkhd.matrix[3] = 0;
-+    trak->tkhd.matrix[4] = G_MAXUINT16;
++    trak->tkhd.matrix[4] = -1;
 +    trak->tkhd.matrix[6] = trak->tkhd.width;
 +    trak->tkhd.matrix[7] = trak->tkhd.height;
 +    break;
 +  case 270:
 +    trak->tkhd.matrix[0] = 0;
-+    trak->tkhd.matrix[1] = G_MAXUINT16;
++    trak->tkhd.matrix[1] = -1;
 +    trak->tkhd.matrix[3] = 1;
 +    trak->tkhd.matrix[4] = 0;
 +    trak->tkhd.matrix[6] = 0;
