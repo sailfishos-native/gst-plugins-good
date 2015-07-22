@@ -1,4 +1,4 @@
-From 58664325fd4c16d2c4891fe8ca4f59b82925ffac Mon Sep 17 00:00:00 2001
+From ddda4a3bd7dd4a5aac602bf596effb8035c2e0b8 Mon Sep 17 00:00:00 2001
 From: Mohammed Hassan <mohammed.hassan@jolla.com>
 Date: Thu, 5 Mar 2015 17:12:13 +0200
 Subject: [PATCH 2/2] qtmux: write rotation information into the TKHD matrix
@@ -16,7 +16,7 @@ Based on the work of Andrew den Exter <andrew.den.exter@jollamobile.com>
  3 files changed, 66 insertions(+)
 
 diff --git a/gst/isomp4/atoms.c b/gst/isomp4/atoms.c
-index 3f1051c..dd4f875 100644
+index 3f1051c..77055e7 100644
 --- a/gst/isomp4/atoms.c
 +++ b/gst/isomp4/atoms.c
 @@ -3557,6 +3557,45 @@ atom_trak_set_subtitle_type (AtomTRAK * trak, AtomsContext * context,
@@ -37,8 +37,8 @@ index 3f1051c..dd4f875 100644
 +    break;
 +  case 90:
 +    trak->tkhd.matrix[0] = 0;
-+    trak->tkhd.matrix[1] = 1;
-+    trak->tkhd.matrix[3] = -1;
++    trak->tkhd.matrix[1] = -1;
++    trak->tkhd.matrix[3] = 1;
 +    trak->tkhd.matrix[4] = 0;
 +    trak->tkhd.matrix[6] = trak->tkhd.height;
 +    trak->tkhd.matrix[7] = 0;
@@ -53,8 +53,8 @@ index 3f1051c..dd4f875 100644
 +    break;
 +  case 270:
 +    trak->tkhd.matrix[0] = 0;
-+    trak->tkhd.matrix[1] = -1;
-+    trak->tkhd.matrix[3] = 1;
++    trak->tkhd.matrix[1] = 1;
++    trak->tkhd.matrix[3] = -1;
 +    trak->tkhd.matrix[4] = 0;
 +    trak->tkhd.matrix[6] = 0;
 +    trak->tkhd.matrix[7] = trak->tkhd.width;
