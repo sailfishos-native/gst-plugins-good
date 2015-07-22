@@ -1,4 +1,4 @@
-From ddda4a3bd7dd4a5aac602bf596effb8035c2e0b8 Mon Sep 17 00:00:00 2001
+From cf7642f8bd31fda1ee0ab9f2e429a60fd831fb88 Mon Sep 17 00:00:00 2001
 From: Mohammed Hassan <mohammed.hassan@jolla.com>
 Date: Thu, 5 Mar 2015 17:12:13 +0200
 Subject: [PATCH 2/2] qtmux: write rotation information into the TKHD matrix
@@ -16,7 +16,7 @@ Based on the work of Andrew den Exter <andrew.den.exter@jollamobile.com>
  3 files changed, 66 insertions(+)
 
 diff --git a/gst/isomp4/atoms.c b/gst/isomp4/atoms.c
-index 3f1051c..77055e7 100644
+index 3f1051c..20cc4d7 100644
 --- a/gst/isomp4/atoms.c
 +++ b/gst/isomp4/atoms.c
 @@ -3557,6 +3557,45 @@ atom_trak_set_subtitle_type (AtomTRAK * trak, AtomsContext * context,
@@ -28,33 +28,33 @@ index 3f1051c..77055e7 100644
 +{
 +  switch (rotation) {
 +  case 0:
-+    trak->tkhd.matrix[0] = 1;
++    trak->tkhd.matrix[0] = 1 << 16;
 +    trak->tkhd.matrix[1] = 0;
 +    trak->tkhd.matrix[3] = 0;
-+    trak->tkhd.matrix[4] = 1;
++    trak->tkhd.matrix[4] = 1 << 16;
 +    trak->tkhd.matrix[6] = 0;
 +    trak->tkhd.matrix[7] = 0;
 +    break;
 +  case 90:
 +    trak->tkhd.matrix[0] = 0;
-+    trak->tkhd.matrix[1] = -1;
-+    trak->tkhd.matrix[3] = 1;
++    trak->tkhd.matrix[1] = 1 << 16;
++    trak->tkhd.matrix[3] = G_MAXUINT16 << 16;
 +    trak->tkhd.matrix[4] = 0;
 +    trak->tkhd.matrix[6] = trak->tkhd.height;
 +    trak->tkhd.matrix[7] = 0;
 +    break;
 +  case 180:
-+    trak->tkhd.matrix[0] = -1;
++    trak->tkhd.matrix[0] = G_MAXUINT16 << 16;
 +    trak->tkhd.matrix[1] = 0;
 +    trak->tkhd.matrix[3] = 0;
-+    trak->tkhd.matrix[4] = -1;
++    trak->tkhd.matrix[4] = G_MAXUINT16 << 16;
 +    trak->tkhd.matrix[6] = trak->tkhd.width;
 +    trak->tkhd.matrix[7] = trak->tkhd.height;
 +    break;
 +  case 270:
 +    trak->tkhd.matrix[0] = 0;
-+    trak->tkhd.matrix[1] = 1;
-+    trak->tkhd.matrix[3] = -1;
++    trak->tkhd.matrix[1] = G_MAXUINT16 << 16;
++    trak->tkhd.matrix[3] = 1 << 16;
 +    trak->tkhd.matrix[4] = 0;
 +    trak->tkhd.matrix[6] = 0;
 +    trak->tkhd.matrix[7] = trak->tkhd.width;
