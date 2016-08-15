@@ -1,8 +1,8 @@
-From 962f1cf5f448a1c0eac041a457e619ba4d2aa833 Mon Sep 17 00:00:00 2001
+From df357449c26cdd24e3f4ff4be1b586ec1c784fff Mon Sep 17 00:00:00 2001
 From: =?UTF-8?q?Juho=20H=C3=A4m=C3=A4l=C3=A4inen?=
  <juho.hamalainen@tieto.com>
 Date: Thu, 17 Oct 2013 15:58:04 +0300
-Subject: [PATCH] Set specific media.role for pulsesink probe.
+Subject: [PATCH 1/2] Set specific media.role for pulsesink probe.
 
 Some PulseAudio modules, like module-role-ducking and module-role-cork
 rely on media.role for their operation. Pulsesink probe stream has the
@@ -15,10 +15,10 @@ stream can be distinguished from resulting stream more easily.
  1 file changed, 17 insertions(+), 1 deletion(-)
 
 diff --git a/ext/pulse/pulsesink.c b/ext/pulse/pulsesink.c
-index 9967c8d..2a3b8c2 100644
+index c88fa96..0c17c2d 100644
 --- a/ext/pulse/pulsesink.c
 +++ b/ext/pulse/pulsesink.c
-@@ -2144,11 +2144,21 @@ gst_pulsesink_create_probe_stream (GstPulseSink * psink,
+@@ -2079,11 +2079,21 @@ gst_pulsesink_create_probe_stream (GstPulseSink * psink,
    pa_format_info *formats[1] = { format };
    pa_stream *stream;
    pa_stream_flags_t flags;
@@ -41,7 +41,7 @@ index 9967c8d..2a3b8c2 100644
      goto error;
  
    /* construct the flags */
-@@ -2164,9 +2174,15 @@ gst_pulsesink_create_probe_stream (GstPulseSink * psink,
+@@ -2099,9 +2109,15 @@ gst_pulsesink_create_probe_stream (GstPulseSink * psink,
    if (!gst_pulsering_wait_for_stream_ready (psink, stream))
      goto error;
  
@@ -58,5 +58,5 @@ index 9967c8d..2a3b8c2 100644
      pa_stream_unref (stream);
    return NULL;
 -- 
-1.8.4.rc3
+2.8.1
 

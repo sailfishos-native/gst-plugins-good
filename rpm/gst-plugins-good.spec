@@ -11,7 +11,6 @@ URL:		http://gstreamer.freedesktop.org/
 Source:         http://gstreamer.freedesktop.org/src/gst-plugins-good/gstreamer1.0-plugins-good-%{version}.tar.xz
 Patch0:         0001-Set-specific-media.role-for-pulsesink-probe.patch
 Patch1:         0002-qtmux-write-rotation-information-into-the-TKHD-matri.patch
-Patch2:         0003-qtdemux-relax-rotation-matrix-checks-a-bit.patch
 Requires:      orc >= 0.4.18
 BuildRequires: pkgconfig(flac)
 BuildRequires: libjpeg-devel
@@ -39,7 +38,6 @@ plug-ins.
 %setup -q -n gstreamer1.0-plugins-good-%{version}/gst-plugins-good
 %patch0 -p1
 %patch1 -p1
-%patch2 -p1
 
 %build
 NOCONFIGURE=1 ./autogen.sh
