@@ -2,7 +2,7 @@
 %define gstreamer   gstreamer
 
 Name: 		%{gstreamer}%{majorminor}-plugins-good
-Version: 	1.8.3
+Version: 	1.10.2
 Release: 	1
 Summary: 	GStreamer plug-ins with good code and licensing
 Group: 		Applications/Multimedia
@@ -11,15 +11,19 @@ URL:		http://gstreamer.freedesktop.org/
 Source:         http://gstreamer.freedesktop.org/src/gst-plugins-good/gstreamer1.0-plugins-good-%{version}.tar.xz
 Patch0:         0001-Set-specific-media.role-for-pulsesink-probe.patch
 Patch1:         0002-qtmux-write-rotation-information-into-the-TKHD-matri.patch
+
+%define sonamever %(echo %{version} | cut -d '+' -f 1)
+
 Requires:      orc >= 0.4.18
 BuildRequires: pkgconfig(flac)
 BuildRequires: libjpeg-devel
 BuildRequires: pkgconfig(libpng)
+BuildRequires: pkgconfig(cairo)
 BuildRequires: pkgconfig(speex)
 BuildRequires: pkgconfig(libpulse)
 BuildRequires: pkgconfig(libsoup-2.4)
 BuildRequires: python
-BuildRequires: pkgconfig(gstreamer-plugins-base-1.0)
+BuildRequires: pkgconfig(gstreamer-plugins-base-1.0) >= %{sonamever}
 BuildRequires: pkgconfig(orc-0.4) >= 0.4.18
 BuildRequires: autoconf
 BuildRequires: automake
@@ -48,6 +52,7 @@ NOCONFIGURE=1 ./autogen.sh
   --disable-nls \
   --disable-static \
   --enable-shared \
+  --disable-introspection \
   --disable-examples \
   --enable-gtk-doc-html=no \
   --enable-gtk-doc-pdf=no \
@@ -74,6 +79,7 @@ rm -fr $RPM_BUILD_ROOT%{_mandir}
 %defattr(-, root, root)
 %{_datadir}/gstreamer-%{majorminor}/presets/GstIirEqualizer10Bands.prs
 %{_datadir}/gstreamer-%{majorminor}/presets/GstIirEqualizer3Bands.prs
+%{_datadir}/gstreamer-%{majorminor}/presets/GstQTMux.prs
 %{_libdir}/gstreamer-%{majorminor}/libgstalaw.so
 %{_libdir}/gstreamer-%{majorminor}/libgstalpha.so
 %{_libdir}/gstreamer-%{majorminor}/libgstautodetect.so
@@ -124,3 +130,4 @@ rm -fr $RPM_BUILD_ROOT%{_mandir}
 %{_libdir}/gstreamer-%{majorminor}/libgstspeex.so
 %{_libdir}/gstreamer-%{majorminor}/libgstpulse.so
 %{_libdir}/gstreamer-%{majorminor}/libgstsouphttpsrc.so
+%{_libdir}/gstreamer-%{majorminor}/libgstcairo.so
