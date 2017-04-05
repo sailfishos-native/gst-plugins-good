@@ -2,7 +2,7 @@
 %define gstreamer   gstreamer
 
 Name: 		%{gstreamer}%{majorminor}-plugins-good
-Version: 	1.10.2
+Version: 	1.10.4
 Release: 	1
 Summary: 	GStreamer plug-ins with good code and licensing
 Group: 		Applications/Multimedia
@@ -61,7 +61,8 @@ NOCONFIGURE=1 ./autogen.sh
   --disable-gst_v4l2 \
   --disable-oss \
   --disable-oss4 \
-  --disable-y4m
+  --disable-y4m \
+  --disable-taglib
 
 make %{?jobs:-j%jobs}
 
