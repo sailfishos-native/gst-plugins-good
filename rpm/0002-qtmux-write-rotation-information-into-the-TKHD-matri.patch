@@ -19,7 +19,7 @@ diff --git a/gst/isomp4/atoms.c b/gst/isomp4/atoms.c
 index e0ec513..d8f0d9f 100644
 --- a/gst/isomp4/atoms.c
 +++ b/gst/isomp4/atoms.c
-@@ -3565,6 +3565,37 @@ atom_trak_set_subtitle_type (AtomTRAK * trak, AtomsContext * context,
+@@ -4350,6 +4350,37 @@ atom_trak_set_subtitle_type (AtomTRAK * trak, AtomsContext * context,
    return tx3g;
  }
  
@@ -61,20 +61,20 @@ diff --git a/gst/isomp4/atoms.h b/gst/isomp4/atoms.h
 index b105a4d..c818b66 100644
 --- a/gst/isomp4/atoms.h
 +++ b/gst/isomp4/atoms.h
-@@ -937,6 +937,8 @@ SampleTableEntryMP4V * atom_trak_set_video_type (AtomTRAK * trak, AtomsContext *
+@@ -1051,6 +1051,8 @@ SampleTableEntryMP4V * atom_trak_set_video_type (AtomTRAK * trak, AtomsContext *
  SampleTableEntryTX3G * atom_trak_set_subtitle_type (AtomTRAK * trak, AtomsContext * context,
                                 SubtitleSampleEntry * entry);
  
 +void atom_trak_set_video_transform (AtomTRAK * trak, gint rotation);
 +
- void atom_trak_update_bitrates (AtomTRAK * trak, guint32 avg_bitrate,
-                                 guint32 max_bitrate);
+ SampleTableEntryTMCD *
+ atom_trak_set_timecode_type (AtomTRAK * trak, AtomsContext * context, guint trak_timescale, GstVideoTimeCode * tc);
  
 diff --git a/gst/isomp4/gstqtmux.c b/gst/isomp4/gstqtmux.c
 index 5be830b..10a959f 100644
 --- a/gst/isomp4/gstqtmux.c
 +++ b/gst/isomp4/gstqtmux.c
-@@ -4237,6 +4237,7 @@ gst_qt_mux_sink_event (GstCollectPads * pads, GstCollectData * data,
+@@ -5866,6 +5866,7 @@ gst_qt_mux_sink_event (GstCollectPads * pads, GstCollectData * data,
        GstTagMergeMode mode;
        gchar *code;
        GstQTPad *collect_pad;
@@ -82,7 +82,7 @@ index 5be830b..10a959f 100644
  
        GST_OBJECT_LOCK (qtmux);
        mode = gst_tag_setter_get_tag_merge_mode (setter);
-@@ -4283,6 +4284,30 @@ gst_qt_mux_sink_event (GstCollectPads * pads, GstCollectData * data,
+@@ -5912,6 +5913,30 @@ gst_qt_mux_sink_event (GstCollectPads * pads, GstCollectData * data,
          g_free (code);
        }
  

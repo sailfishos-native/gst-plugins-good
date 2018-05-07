@@ -18,7 +18,7 @@ diff --git a/ext/pulse/pulsesink.c b/ext/pulse/pulsesink.c
 index c88fa96..0c17c2d 100644
 --- a/ext/pulse/pulsesink.c
 +++ b/ext/pulse/pulsesink.c
-@@ -2079,11 +2079,21 @@ gst_pulsesink_create_probe_stream (GstPulseSink * psink,
+@@ -2078,11 +2078,21 @@ gst_pulsesink_create_probe_stream (GstPulseSink * psink,
    pa_format_info *formats[1] = { format };
    pa_stream *stream;
    pa_stream_flags_t flags;
@@ -41,7 +41,7 @@ index c88fa96..0c17c2d 100644
      goto error;
  
    /* construct the flags */
-@@ -2099,9 +2109,15 @@ gst_pulsesink_create_probe_stream (GstPulseSink * psink,
+@@ -2098,9 +2108,15 @@ gst_pulsesink_create_probe_stream (GstPulseSink * psink,
    if (!gst_pulsering_wait_for_stream_ready (psink, stream))
      goto error;
  

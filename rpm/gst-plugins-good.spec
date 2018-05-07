@@ -2,7 +2,7 @@
 %define gstreamer   gstreamer
 
 Name: 		%{gstreamer}%{majorminor}-plugins-good
-Version: 	1.10.4
+Version: 	1.14.1
 Release: 	1
 Summary: 	GStreamer plug-ins with good code and licensing
 Group: 		Applications/Multimedia
@@ -29,6 +29,9 @@ BuildRequires: autoconf
 BuildRequires: automake
 BuildRequires: libtool
 BuildRequires: gettext-devel
+BuildRequires: pkgconfig(wayland-egl)
+BuildRequires: pkgconfig(glesv2)
+BuildRequires: pkgconfig(egl)
 
 %description
 GStreamer is a streaming media framework, based on graphs of filters which
@@ -129,6 +132,6 @@ rm -fr $RPM_BUILD_ROOT%{_mandir}
 %{_libdir}/gstreamer-%{majorminor}/libgstjpeg.so
 %{_libdir}/gstreamer-%{majorminor}/libgstpng.so
 %{_libdir}/gstreamer-%{majorminor}/libgstspeex.so
-%{_libdir}/gstreamer-%{majorminor}/libgstpulse.so
-%{_libdir}/gstreamer-%{majorminor}/libgstsouphttpsrc.so
+%{_libdir}/gstreamer-%{majorminor}/libgstpulseaudio.so
+%{_libdir}/gstreamer-%{majorminor}/libgstsoup.so
 %{_libdir}/gstreamer-%{majorminor}/libgstcairo.so
