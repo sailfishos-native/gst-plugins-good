@@ -22,6 +22,7 @@ BuildRequires: pkgconfig(cairo)
 BuildRequires: pkgconfig(speex)
 BuildRequires: pkgconfig(libpulse)
 BuildRequires: pkgconfig(libsoup-2.4)
+BuildRequires: pkgconfig(vpx)
 BuildRequires: pkgconfig(libmpg123)
 BuildRequires: python
 BuildRequires: pkgconfig(gstreamer-plugins-base-1.0) >= %{sonamever}
@@ -85,6 +86,7 @@ rm -fr $RPM_BUILD_ROOT%{_mandir}
 %{_datadir}/gstreamer-%{majorminor}/presets/GstIirEqualizer10Bands.prs
 %{_datadir}/gstreamer-%{majorminor}/presets/GstIirEqualizer3Bands.prs
 %{_datadir}/gstreamer-%{majorminor}/presets/GstQTMux.prs
+%{_datadir}/gstreamer-%{majorminor}/presets/GstVP8Enc.prs
 %{_libdir}/gstreamer-%{majorminor}/libgstalaw.so
 %{_libdir}/gstreamer-%{majorminor}/libgstalpha.so
 %{_libdir}/gstreamer-%{majorminor}/libgstautodetect.so
@@ -136,4 +138,5 @@ rm -fr $RPM_BUILD_ROOT%{_mandir}
 %{_libdir}/gstreamer-%{majorminor}/libgstpulseaudio.so
 %{_libdir}/gstreamer-%{majorminor}/libgstsoup.so
 %{_libdir}/gstreamer-%{majorminor}/libgstcairo.so
+%{_libdir}/gstreamer-%{majorminor}/libgstvpx.so
 %{_libdir}/gstreamer-%{majorminor}/libgstmpg123.so
