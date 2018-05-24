@@ -22,6 +22,7 @@ BuildRequires: pkgconfig(cairo)
 BuildRequires: pkgconfig(speex)
 BuildRequires: pkgconfig(libpulse)
 BuildRequires: pkgconfig(libsoup-2.4)
+BuildRequires: pkgconfig(libmpg123)
 BuildRequires: python
 BuildRequires: pkgconfig(gstreamer-plugins-base-1.0) >= %{sonamever}
 BuildRequires: pkgconfig(orc-0.4) >= 0.4.18
@@ -135,3 +136,4 @@ rm -fr $RPM_BUILD_ROOT%{_mandir}
 %{_libdir}/gstreamer-%{majorminor}/libgstpulseaudio.so
 %{_libdir}/gstreamer-%{majorminor}/libgstsoup.so
 %{_libdir}/gstreamer-%{majorminor}/libgstcairo.so
+%{_libdir}/gstreamer-%{majorminor}/libgstmpg123.so
