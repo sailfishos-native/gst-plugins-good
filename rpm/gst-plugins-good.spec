@@ -2,7 +2,7 @@
 %define gstreamer   gstreamer
 
 Name: 		%{gstreamer}%{majorminor}-plugins-good
-Version: 	1.10.4
+Version: 	1.14.1
 Release: 	1
 Summary: 	GStreamer plug-ins with good code and licensing
 Group: 		Applications/Multimedia
@@ -22,6 +22,8 @@ BuildRequires: pkgconfig(cairo)
 BuildRequires: pkgconfig(speex)
 BuildRequires: pkgconfig(libpulse)
 BuildRequires: pkgconfig(libsoup-2.4)
+BuildRequires: pkgconfig(vpx)
+BuildRequires: pkgconfig(libmpg123)
 BuildRequires: python
 BuildRequires: pkgconfig(gstreamer-plugins-base-1.0) >= %{sonamever}
 BuildRequires: pkgconfig(orc-0.4) >= 0.4.18
@@ -29,6 +31,9 @@ BuildRequires: autoconf
 BuildRequires: automake
 BuildRequires: libtool
 BuildRequires: gettext-devel
+BuildRequires: pkgconfig(wayland-egl)
+BuildRequires: pkgconfig(glesv2)
+BuildRequires: pkgconfig(egl)
 
 %description
 GStreamer is a streaming media framework, based on graphs of filters which
@@ -81,6 +86,7 @@ rm -fr $RPM_BUILD_ROOT%{_mandir}
 %{_datadir}/gstreamer-%{majorminor}/presets/GstIirEqualizer10Bands.prs
 %{_datadir}/gstreamer-%{majorminor}/presets/GstIirEqualizer3Bands.prs
 %{_datadir}/gstreamer-%{majorminor}/presets/GstQTMux.prs
+%{_datadir}/gstreamer-%{majorminor}/presets/GstVP8Enc.prs
 %{_libdir}/gstreamer-%{majorminor}/libgstalaw.so
 %{_libdir}/gstreamer-%{majorminor}/libgstalpha.so
 %{_libdir}/gstreamer-%{majorminor}/libgstautodetect.so
@@ -129,6 +135,8 @@ rm -fr $RPM_BUILD_ROOT%{_mandir}
 %{_libdir}/gstreamer-%{majorminor}/libgstjpeg.so
 %{_libdir}/gstreamer-%{majorminor}/libgstpng.so
 %{_libdir}/gstreamer-%{majorminor}/libgstspeex.so
-%{_libdir}/gstreamer-%{majorminor}/libgstpulse.so
-%{_libdir}/gstreamer-%{majorminor}/libgstsouphttpsrc.so
+%{_libdir}/gstreamer-%{majorminor}/libgstpulseaudio.so
+%{_libdir}/gstreamer-%{majorminor}/libgstsoup.so
 %{_libdir}/gstreamer-%{majorminor}/libgstcairo.so
+%{_libdir}/gstreamer-%{majorminor}/libgstvpx.so
+%{_libdir}/gstreamer-%{majorminor}/libgstmpg123.so
