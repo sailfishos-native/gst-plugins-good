@@ -14,6 +14,7 @@ Patch1:         0002-qtmux-write-rotation-information-into-the-TKHD-matri.patch
 
 %define sonamever %(echo %{version} | cut -d '+' -f 1)
 
+Requires:      gstreamer1.0
 Requires:      orc >= 0.4.18
 BuildRequires: pkgconfig(flac)
 BuildRequires: libjpeg-devel
@@ -82,7 +83,9 @@ rm -f $RPM_BUILD_ROOT%{_libdir}/*.la
 rm -fr $RPM_BUILD_ROOT%{_mandir}
 
 %files
+%license COPYING
 %defattr(-, root, root)
+%dir %{_datadir}/gstreamer-%{majorminor}/presets
 %{_datadir}/gstreamer-%{majorminor}/presets/GstIirEqualizer10Bands.prs
 %{_datadir}/gstreamer-%{majorminor}/presets/GstIirEqualizer3Bands.prs
 %{_datadir}/gstreamer-%{majorminor}/presets/GstQTMux.prs
