@@ -32,6 +32,10 @@ BuildRequires: bzip2-devel
 BuildRequires: meson
 BuildRequires: libtool
 BuildRequires: gettext-devel
+BuildRequires: pkgconfig(wayland-egl)
+BuildRequires: pkgconfig(glesv2)
+BuildRequires: pkgconfig(egl)
+BuildRequires: pkgconfig(libv4l2)
 
 %description
 GStreamer is a streaming media framework, based on graphs of filters which
@@ -54,8 +58,9 @@ plug-ins.
   -Dexamples=disabled \
   -Dorc=enabled \
   -Dvpx=enabled \
-  -Dv4l2-probe=false \
-  -Dv4l2-libv4l2=disabled \
+  -Dv4l2-probe=true \
+  -Dv4l2-libv4l2=enabled \
+  -Dgst_v4l2=enabled \
   -Doss=disabled -Doss4=disabled \
   -Dy4m=disabled \
   -Dtaglib=disabled \
