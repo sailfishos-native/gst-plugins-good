@@ -2,7 +2,7 @@
 %define gstreamer   gstreamer
 
 Name: 		%{gstreamer}%{majorminor}-plugins-good
-Version: 	1.14.1
+Version: 	1.16.1
 Release: 	1
 Summary: 	GStreamer plug-ins with good code and licensing
 Group: 		Applications/Multimedia
@@ -25,16 +25,14 @@ BuildRequires: pkgconfig(libpulse)
 BuildRequires: pkgconfig(libsoup-2.4)
 BuildRequires: pkgconfig(vpx)
 BuildRequires: pkgconfig(libmpg123)
+BuildRequires: pkgconfig(gudev-1.0)
 BuildRequires: python
 BuildRequires: pkgconfig(gstreamer-plugins-base-1.0) >= %{sonamever}
 BuildRequires: pkgconfig(orc-0.4) >= 0.4.18
-BuildRequires: autoconf
-BuildRequires: automake
+BuildRequires: bzip2-devel
+BuildRequires: meson
 BuildRequires: libtool
 BuildRequires: gettext-devel
-BuildRequires: pkgconfig(wayland-egl)
-BuildRequires: pkgconfig(glesv2)
-BuildRequires: pkgconfig(egl)
 
 %description
 GStreamer is a streaming media framework, based on graphs of filters which
@@ -50,30 +48,35 @@ plug-ins.
 %patch1 -p1
 
 %build
-NOCONFIGURE=1 ./autogen.sh
-%configure \
-  --with-package-name='SailfishOS GStreamer Good Plug-ins' \
-  --with-package-origin='http://jolla.com' \
-  --disable-gtk-doc \
-  --disable-nls \
-  --disable-static \
-  --enable-shared \
-  --disable-introspection \
-  --disable-examples \
-  --enable-gtk-doc-html=no \
-  --enable-gtk-doc-pdf=no \
-  --enable-debug \
-  --enable-orc \
-  --disable-gst_v4l2 \
-  --disable-oss \
-  --disable-oss4 \
-  --disable-y4m \
-  --disable-taglib
+%meson \
+  -Dpackage-name='SailfishOS GStreamer package plugins (good set)' \
+  -Dpackage-origin='http://sailfishos.org/' \
+  -Dnls=disabled \
+  -Dexamples=disabled \
+  -Dorc=enabled \
+  -Dvpx=enabled \
+  -Dv4l2-probe=false \
+  -Dv4l2-libv4l2=disabled \
+  -Doss=disabled -Doss4=disabled \
+  -Dy4m=disabled \
+  -Dtaglib=disabled \
+  -Dqt5=disabled \
+  -Dximagesrc=disabled \
+  -Daalib=disabled \
+  -Dgdk-pixbuf=disabled -Dgtk3=disabled \
+  -Djack=disabled \
+  -Dlame=disabled -Dtwolame=disabled \
+  -Dlibcaca=disabled \
+  -Ddv=disabled \
+  -Ddv1394=disabled \
+  -Dshout2=disabled \
+  -Dwavpack=disabled \
+  -Dmonoscope=disabled
 
-make %{?jobs:-j%jobs}
+%meson_build
 
 %install
-%make_install
+%meson_install
 
 # Clean out files that should not be part of the rpm.
 rm -f $RPM_BUILD_ROOT%{_libdir}/gstreamer-%{majorminor}/*.la
@@ -143,3 +146,4 @@ rm -fr $RPM_BUILD_ROOT%{_mandir}
 %{_libdir}/gstreamer-%{majorminor}/libgstcairo.so
 %{_libdir}/gstreamer-%{majorminor}/libgstvpx.so
 %{_libdir}/gstreamer-%{majorminor}/libgstmpg123.so
+%{_libdir}/gstreamer-%{majorminor}/libgstvideo4linux2.so
