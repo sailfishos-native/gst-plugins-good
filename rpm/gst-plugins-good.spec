@@ -26,7 +26,6 @@ BuildRequires: pkgconfig(libsoup-2.4)
 BuildRequires: pkgconfig(vpx)
 BuildRequires: pkgconfig(libmpg123)
 BuildRequires: pkgconfig(gudev-1.0)
-BuildRequires: python
 BuildRequires: pkgconfig(gstreamer-plugins-base-1.0) >= %{sonamever}
 BuildRequires: pkgconfig(orc-0.4) >= 0.4.18
 BuildRequires: bzip2-devel
