@@ -2,7 +2,7 @@
 %define gstreamer   gstreamer
 
 Name: 		%{gstreamer}%{majorminor}-plugins-good
-Version: 	1.16.2
+Version: 	1.18.1
 Release: 	1
 Summary: 	GStreamer plug-ins with good code and licensing
 License: 	LGPLv2+
@@ -41,15 +41,14 @@ types or processing capabilities can be added simply by installing new
 plug-ins.
 
 %prep
-%setup -q -n gstreamer1.0-plugins-good-%{version}/gst-plugins-good
-%patch0 -p1
-%patch1 -p1
+%autosetup -p1 -n gstreamer1.0-plugins-good-%{version}/gst-plugins-good
 
 %build
 %meson \
   -Dpackage-name='SailfishOS GStreamer package plugins (good set)' \
   -Dpackage-origin='http://sailfishos.org/' \
   -Dnls=disabled \
+  -Ddoc=disabled \
   -Dexamples=disabled \
   -Dorc=enabled \
   -Dvpx=enabled \
@@ -69,7 +68,8 @@ plug-ins.
   -Ddv1394=disabled \
   -Dshout2=disabled \
   -Dwavpack=disabled \
-  -Dmonoscope=disabled
+  -Dmonoscope=disabled \
+  -Drpicamsrc=disabled
 
 %meson_build
 
@@ -84,64 +84,64 @@ rm -f $RPM_BUILD_ROOT%{_libdir}/*.la
 rm -fr $RPM_BUILD_ROOT%{_mandir}
 
 %files
-%license COPYING
 %defattr(-, root, root)
+%license COPYING
 %dir %{_datadir}/gstreamer-%{majorminor}/presets
 %{_datadir}/gstreamer-%{majorminor}/presets/GstIirEqualizer10Bands.prs
 %{_datadir}/gstreamer-%{majorminor}/presets/GstIirEqualizer3Bands.prs
 %{_datadir}/gstreamer-%{majorminor}/presets/GstQTMux.prs
 %{_datadir}/gstreamer-%{majorminor}/presets/GstVP8Enc.prs
 %{_libdir}/gstreamer-%{majorminor}/libgstalaw.so
+%{_libdir}/gstreamer-%{majorminor}/libgstalphacolor.so
 %{_libdir}/gstreamer-%{majorminor}/libgstalpha.so
+%{_libdir}/gstreamer-%{majorminor}/libgstapetag.so
+%{_libdir}/gstreamer-%{majorminor}/libgstaudiofx.so
+%{_libdir}/gstreamer-%{majorminor}/libgstaudioparsers.so
+%{_libdir}/gstreamer-%{majorminor}/libgstauparse.so
 %{_libdir}/gstreamer-%{majorminor}/libgstautodetect.so
 %{_libdir}/gstreamer-%{majorminor}/libgstavi.so
+%{_libdir}/gstreamer-%{majorminor}/libgstcairo.so
+%{_libdir}/gstreamer-%{majorminor}/libgstcutter.so
+%{_libdir}/gstreamer-%{majorminor}/libgstdebug.so
+%{_libdir}/gstreamer-%{majorminor}/libgstdeinterlace.so
+%{_libdir}/gstreamer-%{majorminor}/libgstdtmf.so
 %{_libdir}/gstreamer-%{majorminor}/libgsteffectv.so
+%{_libdir}/gstreamer-%{majorminor}/libgstequalizer.so
+%{_libdir}/gstreamer-%{majorminor}/libgstflac.so
+%{_libdir}/gstreamer-%{majorminor}/libgstflv.so
+%{_libdir}/gstreamer-%{majorminor}/libgstflxdec.so
+%{_libdir}/gstreamer-%{majorminor}/libgstgoom2k1.so
 %{_libdir}/gstreamer-%{majorminor}/libgstgoom.so
-%{_libdir}/gstreamer-%{majorminor}/libgstlevel.so
-%{_libdir}/gstreamer-%{majorminor}/libgstmulaw.so
+%{_libdir}/gstreamer-%{majorminor}/libgsticydemux.so
+%{_libdir}/gstreamer-%{majorminor}/libgstid3demux.so
+%{_libdir}/gstreamer-%{majorminor}/libgstimagefreeze.so
+%{_libdir}/gstreamer-%{majorminor}/libgstinterleave.so
 %{_libdir}/gstreamer-%{majorminor}/libgstisomp4.so
-%{_libdir}/gstreamer-%{majorminor}/libgstrtp.so
+%{_libdir}/gstreamer-%{majorminor}/libgstjpeg.so
+%{_libdir}/gstreamer-%{majorminor}/libgstlevel.so
+%{_libdir}/gstreamer-%{majorminor}/libgstmatroska.so
+%{_libdir}/gstreamer-%{majorminor}/libgstmpg123.so
+%{_libdir}/gstreamer-%{majorminor}/libgstmulaw.so
+%{_libdir}/gstreamer-%{majorminor}/libgstmultifile.so
+%{_libdir}/gstreamer-%{majorminor}/libgstmultipart.so
+%{_libdir}/gstreamer-%{majorminor}/libgstnavigationtest.so
+%{_libdir}/gstreamer-%{majorminor}/libgstpng.so
+%{_libdir}/gstreamer-%{majorminor}/libgstpulseaudio.so
+%{_libdir}/gstreamer-%{majorminor}/libgstreplaygain.so
 %{_libdir}/gstreamer-%{majorminor}/libgstrtpmanager.so
+%{_libdir}/gstreamer-%{majorminor}/libgstrtp.so
 %{_libdir}/gstreamer-%{majorminor}/libgstrtsp.so
+%{_libdir}/gstreamer-%{majorminor}/libgstshapewipe.so
 %{_libdir}/gstreamer-%{majorminor}/libgstsmpte.so
+%{_libdir}/gstreamer-%{majorminor}/libgstsoup.so
+%{_libdir}/gstreamer-%{majorminor}/libgstspectrum.so
+%{_libdir}/gstreamer-%{majorminor}/libgstspeex.so
 %{_libdir}/gstreamer-%{majorminor}/libgstudp.so
+%{_libdir}/gstreamer-%{majorminor}/libgstvideo4linux2.so
 %{_libdir}/gstreamer-%{majorminor}/libgstvideobox.so
+%{_libdir}/gstreamer-%{majorminor}/libgstvideocrop.so
+%{_libdir}/gstreamer-%{majorminor}/libgstvideofilter.so
+%{_libdir}/gstreamer-%{majorminor}/libgstvideomixer.so
+%{_libdir}/gstreamer-%{majorminor}/libgstvpx.so
 %{_libdir}/gstreamer-%{majorminor}/libgstwavenc.so
 %{_libdir}/gstreamer-%{majorminor}/libgstwavparse.so
-%{_libdir}/gstreamer-%{majorminor}/libgstauparse.so
-%{_libdir}/gstreamer-%{majorminor}/libgstdebug.so
-%{_libdir}/gstreamer-%{majorminor}/libgstnavigationtest.so
-%{_libdir}/gstreamer-%{majorminor}/libgstalphacolor.so
-%{_libdir}/gstreamer-%{majorminor}/libgstflxdec.so
-%{_libdir}/gstreamer-%{majorminor}/libgstmatroska.so
-%{_libdir}/gstreamer-%{majorminor}/libgstvideomixer.so
-%{_libdir}/gstreamer-%{majorminor}/libgstcutter.so
-%{_libdir}/gstreamer-%{majorminor}/libgstmultipart.so
-%{_libdir}/gstreamer-%{majorminor}/libgstid3demux.so
-%{_libdir}/gstreamer-%{majorminor}/libgstapetag.so
-%{_libdir}/gstreamer-%{majorminor}/libgstvideocrop.so
-%{_libdir}/gstreamer-%{majorminor}/libgsticydemux.so
-%{_libdir}/gstreamer-%{majorminor}/libgstaudiofx.so
-%{_libdir}/gstreamer-%{majorminor}/libgstequalizer.so
-%{_libdir}/gstreamer-%{majorminor}/libgstmultifile.so
-%{_libdir}/gstreamer-%{majorminor}/libgstspectrum.so
-%{_libdir}/gstreamer-%{majorminor}/libgstgoom2k1.so
-%{_libdir}/gstreamer-%{majorminor}/libgstinterleave.so
-%{_libdir}/gstreamer-%{majorminor}/libgstreplaygain.so
-%{_libdir}/gstreamer-%{majorminor}/libgstdeinterlace.so
-%{_libdir}/gstreamer-%{majorminor}/libgstflv.so
-%{_libdir}/gstreamer-%{majorminor}/libgstimagefreeze.so
-%{_libdir}/gstreamer-%{majorminor}/libgstshapewipe.so
-%{_libdir}/gstreamer-%{majorminor}/libgstvideofilter.so
-%{_libdir}/gstreamer-%{majorminor}/libgstaudioparsers.so
-%{_libdir}/gstreamer-%{majorminor}/libgstdtmf.so
-%{_libdir}/gstreamer-%{majorminor}/libgstflac.so
-%{_libdir}/gstreamer-%{majorminor}/libgstjpeg.so
-%{_libdir}/gstreamer-%{majorminor}/libgstpng.so
-%{_libdir}/gstreamer-%{majorminor}/libgstspeex.so
-%{_libdir}/gstreamer-%{majorminor}/libgstpulseaudio.so
-%{_libdir}/gstreamer-%{majorminor}/libgstsoup.so
-%{_libdir}/gstreamer-%{majorminor}/libgstcairo.so
-%{_libdir}/gstreamer-%{majorminor}/libgstvpx.so
-%{_libdir}/gstreamer-%{majorminor}/libgstmpg123.so
-%{_libdir}/gstreamer-%{majorminor}/libgstvideo4linux2.so
