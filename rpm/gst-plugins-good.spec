@@ -31,6 +31,9 @@ BuildRequires: bzip2-devel
 BuildRequires: meson
 BuildRequires: libtool
 BuildRequires: gettext-devel
+%ifarch x86_64
+BuildRequires: nasm
+%endif
 
 %description
 GStreamer is a streaming media framework, based on graphs of filters which
