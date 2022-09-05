@@ -1,8 +1,11 @@
 %define majorminor  1.0
 %define gstreamer   gstreamer
 
+%global _vpath_srcdir subprojects/gst-plugins-good
+%global _vpath_builddir subprojects/gst-plugins-good/_build
+
 Name: 		%{gstreamer}%{majorminor}-plugins-good
-Version: 	1.18.5
+Version: 	1.20.3
 Release: 	1
 Summary: 	GStreamer plug-ins with good code and licensing
 License: 	LGPLv2+
@@ -31,9 +34,6 @@ BuildRequires: bzip2-devel
 BuildRequires: meson
 BuildRequires: libtool
 BuildRequires: gettext-devel
-%ifarch x86_64
-BuildRequires: nasm
-%endif
 
 %description
 GStreamer is a streaming media framework, based on graphs of filters which
@@ -44,7 +44,7 @@ types or processing capabilities can be added simply by installing new
 plug-ins.
 
 %prep
-%autosetup -p1 -n gstreamer1.0-plugins-good-%{version}/gst-plugins-good
+%autosetup -p1 -n gstreamer1.0-plugins-good-%{version}/gstreamer
 
 %build
 %meson \
@@ -88,7 +88,7 @@ rm -fr $RPM_BUILD_ROOT%{_mandir}
 
 %files
 %defattr(-, root, root)
-%license COPYING
+%license subprojects/gst-plugins-good/COPYING
 %dir %{_datadir}/gstreamer-%{majorminor}/presets
 %{_datadir}/gstreamer-%{majorminor}/presets/GstIirEqualizer10Bands.prs
 %{_datadir}/gstreamer-%{majorminor}/presets/GstIirEqualizer3Bands.prs

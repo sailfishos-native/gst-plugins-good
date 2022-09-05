@@ -1,8 +1,8 @@
-From 1cc0486c7b0e30db86aa78c57bb102aab66bd43d Mon Sep 17 00:00:00 2001
+From 0000000000000000000000000000000000000000 Mon Sep 17 00:00:00 2001
 From: =?UTF-8?q?Juho=20H=C3=A4m=C3=A4l=C3=A4inen?=
  <juho.hamalainen@tieto.com>
 Date: Thu, 17 Oct 2013 15:58:04 +0300
-Subject: [PATCH 1/2] Set specific media.role for pulsesink probe.
+Subject: [PATCH] Set specific media.role for pulsesink probe.
 
 Some PulseAudio modules, like module-role-ducking and module-role-cork
 rely on media.role for their operation. Pulsesink probe stream has the
@@ -11,14 +11,14 @@ unneccessary and distruptive actions in aforementioned modules.
 Set/overwrite pulsesink probe stream's media.role property so that probe
 stream can be distinguished from resulting stream more easily.
 ---
- ext/pulse/pulsesink.c | 18 +++++++++++++++++-
+ .../gst-plugins-good/ext/pulse/pulsesink.c     | 18 +++++++++++++++++-
  1 file changed, 17 insertions(+), 1 deletion(-)
 
-diff --git a/ext/pulse/pulsesink.c b/ext/pulse/pulsesink.c
-index b3a586608..29d805979 100644
---- a/ext/pulse/pulsesink.c
-+++ b/ext/pulse/pulsesink.c
-@@ -2079,11 +2079,21 @@ gst_pulsesink_create_probe_stream (GstPulseSink * psink,
+diff --git a/subprojects/gst-plugins-good/ext/pulse/pulsesink.c b/subprojects/gst-plugins-good/ext/pulse/pulsesink.c
+index a61c93d0a40f74f27c13ff62d018bd375aa930d4..cbdccaa249d3aa1d341f682be9869c0881c61bfa 100644
+--- a/subprojects/gst-plugins-good/ext/pulse/pulsesink.c
++++ b/subprojects/gst-plugins-good/ext/pulse/pulsesink.c
+@@ -2082,11 +2082,21 @@ gst_pulsesink_create_probe_stream (GstPulseSink * psink,
    pa_format_info *formats[1] = { format };
    pa_stream *stream;
    pa_stream_flags_t flags;
@@ -41,7 +41,7 @@ index b3a586608..29d805979 100644
      goto error;
  
    /* construct the flags */
-@@ -2099,9 +2109,15 @@ gst_pulsesink_create_probe_stream (GstPulseSink * psink,
+@@ -2102,9 +2112,15 @@ gst_pulsesink_create_probe_stream (GstPulseSink * psink,
    if (!gst_pulsering_wait_for_stream_ready (psink, stream))
      goto error;
  
@@ -57,6 +57,3 @@ index b3a586608..29d805979 100644
    if (stream)
      pa_stream_unref (stream);
    return NULL;
--- 
-2.25.1
-
