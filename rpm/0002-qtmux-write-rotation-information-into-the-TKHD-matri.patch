@@ -1,7 +1,7 @@
-From 6850c6f5f549487754f766de63ba1565afc2cf04 Mon Sep 17 00:00:00 2001
+From 0000000000000000000000000000000000000000 Mon Sep 17 00:00:00 2001
 From: Mohammed Hassan <mohammed.hassan@jolla.com>
 Date: Thu, 5 Mar 2015 17:12:13 +0200
-Subject: [PATCH 2/2] qtmux: write rotation information into the TKHD matrix
+Subject: [PATCH] qtmux: write rotation information into the TKHD matrix
 
 This patch handles the simple cases of 0, 90, 180 and 270
 
@@ -10,16 +10,16 @@ the corresponding transformation matrix.
 
 Based on the work of Andrew den Exter <andrew.den.exter@jollamobile.com>
 ---
- gst/isomp4/atoms.c    | 31 +++++++++++++++++++++++++++++++
- gst/isomp4/atoms.h    |  2 ++
- gst/isomp4/gstqtmux.c | 23 +++++++++++++++++++++++
+ .../gst-plugins-good/gst/isomp4/atoms.c       | 31 +++++++++++++++++++
+ .../gst-plugins-good/gst/isomp4/atoms.h       |  2 ++
+ .../gst-plugins-good/gst/isomp4/gstqtmux.c    | 23 ++++++++++++++
  3 files changed, 56 insertions(+)
 
-diff --git a/gst/isomp4/atoms.c b/gst/isomp4/atoms.c
-index 8dd493e15..aa59a7e06 100644
---- a/gst/isomp4/atoms.c
-+++ b/gst/isomp4/atoms.c
-@@ -4443,6 +4443,37 @@ atom_trak_set_subtitle_type (AtomTRAK * trak, AtomsContext * context,
+diff --git a/subprojects/gst-plugins-good/gst/isomp4/atoms.c b/subprojects/gst-plugins-good/gst/isomp4/atoms.c
+index 290d1fdf6257c681ff89e61aa31f90729caa7f48..7e34ced88e7de41846331f818359bb6e25824f28 100644
+--- a/subprojects/gst-plugins-good/gst/isomp4/atoms.c
++++ b/subprojects/gst-plugins-good/gst/isomp4/atoms.c
+@@ -4450,6 +4450,37 @@ atom_trak_set_subtitle_type (AtomTRAK * trak, AtomsContext * context,
    return tx3g;
  }
  
@@ -57,11 +57,11 @@ index 8dd493e15..aa59a7e06 100644
  static void
  atom_mfhd_init (AtomMFHD * mfhd, guint32 sequence_number)
  {
-diff --git a/gst/isomp4/atoms.h b/gst/isomp4/atoms.h
-index d176d8e16..77d30bc0a 100644
---- a/gst/isomp4/atoms.h
-+++ b/gst/isomp4/atoms.h
-@@ -1065,6 +1065,8 @@ SampleTableEntryMP4V * atom_trak_set_video_type (AtomTRAK * trak, AtomsContext *
+diff --git a/subprojects/gst-plugins-good/gst/isomp4/atoms.h b/subprojects/gst-plugins-good/gst/isomp4/atoms.h
+index 33d1525d4011ef5f00d1f6820bd7ef26110b42a7..406935ec3670419c5ab2063bb9b7c0f4968609d6 100644
+--- a/subprojects/gst-plugins-good/gst/isomp4/atoms.h
++++ b/subprojects/gst-plugins-good/gst/isomp4/atoms.h
+@@ -1069,6 +1069,8 @@ SampleTableEntryMP4V * atom_trak_set_video_type (AtomTRAK * trak, AtomsContext *
  SampleTableEntryTX3G * atom_trak_set_subtitle_type (AtomTRAK * trak, AtomsContext * context,
                                 SubtitleSampleEntry * entry);
  
@@ -70,11 +70,11 @@ index d176d8e16..77d30bc0a 100644
  SampleTableEntryTMCD *
  atom_trak_set_timecode_type (AtomTRAK * trak, AtomsContext * context, guint trak_timescale, GstVideoTimeCode * tc);
  
-diff --git a/gst/isomp4/gstqtmux.c b/gst/isomp4/gstqtmux.c
-index 43b5b40c6..f45ef8fdb 100644
---- a/gst/isomp4/gstqtmux.c
-+++ b/gst/isomp4/gstqtmux.c
-@@ -6429,6 +6429,7 @@ gst_qt_mux_sink_event (GstAggregator * agg, GstAggregatorPad * agg_pad,
+diff --git a/subprojects/gst-plugins-good/gst/isomp4/gstqtmux.c b/subprojects/gst-plugins-good/gst/isomp4/gstqtmux.c
+index f947a6aaa6938892b42f788e527154f8b87d6816..8f1207cbe4e3d1f0d5f7a47d84b587becc3c6a08 100644
+--- a/subprojects/gst-plugins-good/gst/isomp4/gstqtmux.c
++++ b/subprojects/gst-plugins-good/gst/isomp4/gstqtmux.c
+@@ -6919,6 +6919,7 @@ gst_qt_mux_sink_event (GstAggregator * agg, GstAggregatorPad * agg_pad,
        GstTagSetter *setter = GST_TAG_SETTER (qtmux);
        GstTagMergeMode mode;
        gchar *code;
@@ -82,7 +82,7 @@ index 43b5b40c6..f45ef8fdb 100644
  
        GST_OBJECT_LOCK (qtmux);
        mode = gst_tag_setter_get_tag_merge_mode (setter);
-@@ -6467,6 +6468,28 @@ gst_qt_mux_sink_event (GstAggregator * agg, GstAggregatorPad * agg_pad,
+@@ -6957,6 +6958,28 @@ gst_qt_mux_sink_event (GstAggregator * agg, GstAggregatorPad * agg_pad,
          g_free (code);
        }
  
@@ -111,6 +111,3 @@ index 43b5b40c6..f45ef8fdb 100644
        gst_event_unref (event);
        event = NULL;
        ret = TRUE;
--- 
-2.25.1
-
