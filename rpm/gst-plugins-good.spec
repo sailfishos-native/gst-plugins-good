@@ -5,7 +5,7 @@
 %global _vpath_builddir subprojects/gst-plugins-good/_build
 
 Name: 		%{gstreamer}%{majorminor}-plugins-good
-Version: 	1.20.3
+Version: 	1.20.4
 Release: 	1
 Summary: 	GStreamer plug-ins with good code and licensing
 License: 	LGPLv2+
@@ -34,6 +34,9 @@ BuildRequires: bzip2-devel
 BuildRequires: meson
 BuildRequires: libtool
 BuildRequires: gettext-devel
+%ifarch x86_64
+BuildRequires: nasm
+%endif
 
 %description
 GStreamer is a streaming media framework, based on graphs of filters which
