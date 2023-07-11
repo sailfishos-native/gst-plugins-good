@@ -5,12 +5,12 @@
 %global _vpath_builddir subprojects/gst-plugins-good/_build
 
 Name: 		%{gstreamer}%{majorminor}-plugins-good
-Version: 	1.20.4
+Version: 	1.22.4
 Release: 	1
 Summary: 	GStreamer plug-ins with good code and licensing
 License: 	LGPLv2+
 URL:		http://gstreamer.freedesktop.org/
-Source:         http://gstreamer.freedesktop.org/src/gst-plugins-good/gstreamer1.0-plugins-good-%{version}.tar.xz
+Source:         %{name}-%{version}.tar.xz
 Patch0:         0001-Set-specific-media.role-for-pulsesink-probe.patch
 Patch1:         0002-qtmux-write-rotation-information-into-the-TKHD-matri.patch
 
@@ -64,6 +64,7 @@ plug-ins.
   -Dy4m=disabled \
   -Dtaglib=disabled \
   -Dqt5=disabled \
+  -Dqt6=disabled \
   -Dximagesrc=disabled \
   -Daalib=disabled \
   -Dgdk-pixbuf=disabled -Dgtk3=disabled \
@@ -97,6 +98,7 @@ rm -fr $RPM_BUILD_ROOT%{_mandir}
 %{_datadir}/gstreamer-%{majorminor}/presets/GstIirEqualizer3Bands.prs
 %{_datadir}/gstreamer-%{majorminor}/presets/GstQTMux.prs
 %{_datadir}/gstreamer-%{majorminor}/presets/GstVP8Enc.prs
+%{_libdir}/gstreamer-%{majorminor}/libgstadaptivedemux2.so
 %{_libdir}/gstreamer-%{majorminor}/libgstalaw.so
 %{_libdir}/gstreamer-%{majorminor}/libgstalphacolor.so
 %{_libdir}/gstreamer-%{majorminor}/libgstalpha.so
@@ -151,3 +153,4 @@ rm -fr $RPM_BUILD_ROOT%{_mandir}
 %{_libdir}/gstreamer-%{majorminor}/libgstvpx.so
 %{_libdir}/gstreamer-%{majorminor}/libgstwavenc.so
 %{_libdir}/gstreamer-%{majorminor}/libgstwavparse.so
+%{_libdir}/gstreamer-%{majorminor}/libgstxingmux.so
